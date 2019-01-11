@@ -31,6 +31,19 @@ html, body{
     pointer-events: none;
 }
 
+.popout-button{
+    width: 20px;
+    height: 20px;
+    background-image: url('https://i.imgur.com/66OuwS2.png');
+    background-size: 20px;
+    background-repeat: no-repeat;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: -12px;
+    z-index: 200;
+    cursor: pointer;
+}
 /*::-webkit-scrollbar {*/
     /*width: 15px;*/
 /*}*/

@@ -11,13 +11,15 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.patreon.com/*"
+        "*://*.patreon.com/*"
       ],
-      "js": ["load.js"]
+      "js": ["jquery-3.3.1.min.js","load.js"],
+      "css": ["index.css"],
+      "html": ["index.html"]
     }
-  ]
-//  "permissions": [
-//    "activeTab",
-//	"storage"
-//  ]
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "persistent": false
 }
