@@ -58,17 +58,17 @@
 //     ["blocking"]);
 // console.log('hi');
 
-chrome.runtime.onInstalled.addListener(function() {
-    chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
-        if(request.cmd === "read_file") {
-            $.ajax({
-                url: chrome.extension.getURL("index.html"),
-                dataType: "html",
-                success: sendResponse
-            });
-        }
-    });
-});
+// chrome.runtime.onInstalled.addListener(function() {
+//     chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
+//         if(request.cmd === "read_file") {
+//             $.ajax({
+//                 url: chrome.extension.getURL("index.html"),
+//                 dataType: "html",
+//                 success: sendResponse
+//             });
+//         }
+//     });
+// });
 // 'use strict';
 //
 // chrome.browserAction.onClicked.addListener(function() {

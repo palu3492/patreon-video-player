@@ -1,7 +1,12 @@
 
 
 var posts = [];
-
+var html = `
+<div id="outer-container">
+	<div id="iframe-container">
+		<iframe id="iframe22" scrolling="no" frameborder="0" src="crs" allowfullscreen></iframe>
+	</div>
+</div>`;
 
 function findVideoPosts(){
     var possiblePosts = document.querySelectorAll('[data-tag]');
@@ -19,8 +24,9 @@ function findVideoPosts(){
 function addButtons(){
     for (var i=0; i<posts.length; i++) {
         var post = posts[i];
-        post.id = 'p'+i.toString();
-		post.insertAdjacentHTML('afterbegin', '<div class="popout-button" onclick="buttonPressed(this)" id="b'+i.toString()+'"></div>');
+        var istr = i.toString();
+        post.id = 'p'+istr;
+		post.insertAdjacentHTML('afterbegin', `<div class="popout-button" onclick="buttonPressed(this)" id="b${istr}"></div>`);
     }
 }
 
@@ -28,18 +34,38 @@ function buttonPressed(button){
 	var id = button.id;
 	var post = $('#p'+id[1]);
 	// if video not loaded yet then click play to load it
-    $(post).find('button').click();
+	if(true) {
+        $(post).find('button').click();
+    }
     var iframe1 = $(post).find('iframe')[0];
-    var src = iframe1.src.split('&')[0];
-    // $("body").insertAdjacentHTML('afterbegin', html);
-    chrome.extension.sendRequest({cmd: "read_file"}, function(html){
-        // $("body").html(html);
-        console.log('html:');
-        console.log(html);
-    });
-    // put src in my iframe
-    // load in html
-    // $(post).find('button').click();
+    var src = iframe1.src.split('=')[1].split('&')[0];
+    var src2 = convertAllEscapes(src,1);
+    //if not already exists otherwise just change src
+	if(true) {
+        $("body")[0].insertAdjacentHTML('afterbegin', html.replace("crs", src2));
+        $("#iframe-container").resizable({
+            aspectRatio: 16 / 9,
+            maxHeight: 1080,
+            maxWidth: 1920,
+            minHeight: 230,
+            minWidth: 400,
+            handles: "se"
+        });
+        $("#iframe-container").hover(handlerIn, function () {
+        });
+        $("#iframe22").hover(handlerIn, function () {
+        });
+    }
+}
+
+function handlerIn(){
+	if($("#iframe-container")[0].classList.value === 'ui-resizable ui-resizable-resizing'){
+		$("#iframe22").addClass('iframe-resize');
+		console.log('yes');
+	} else {
+        console.log('no');
+        $("#iframe22").removeClass('iframe-resize');
+	}
 }
 
 // function findAllBoxes(){

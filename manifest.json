@@ -13,13 +13,12 @@
       "matches": [
         "*://*.patreon.com/*"
       ],
-      "js": ["jquery-3.3.1.min.js","load.js"],
-      "css": ["index.css"],
-      "html": ["index.html"]
+      "js": ["jquery-3.3.1.min.js","load.js", "jquery-ui.js", "conversionfunctions.js"],
+      "css": ["index.css", "jquery-ui.css"]
     }
-  ],
-  "background": {
-    "scripts": ["background.js"]
-  },
-  "persistent": false
+  ]
+//  "background": {
+//    "scripts": ["background.js"]
+//  },
+//  "persistent": false
 }
