@@ -1,13 +1,9 @@
 {
+  "author": "Alex Palumbo",
   "manifest_version": 2,
-
-  "name": "Patreon Popout Video Player",
-  "description": "",
+  "name": "Patreon Popup Video Player",
+  "description": "Watching videos posted by creators on Patreon is great but only being able to watch them  in a small window or in full screen can be annoying. This extension allows users to watch videos in a popup window while remaining on Patreon's website. The popup video player can be resized to any size and darkens out the background to make the video the center of attention on screen.",
   "version": "1.1",
-
-//  "browser_action": {
-//    "default_icon": "icon1.png"
-//  },
   "content_scripts": [
     {
       "matches": [
@@ -17,9 +13,9 @@
       "css": ["css/index.css", "css/jquery-ui.css"]
     }
   ],
-  "web_accessible_resources":["images/popup.png", "images/closeIconWhite.png", "images/frameResize.png"]
-//  "background": {
-//    "scripts": ["background.js"]
-//  },
-//  "persistent": false
+  "web_accessible_resources":["images/popup.png", "images/closeIconWhite.png", "images/frameResize.png"],
+  "icons": { "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
 }
