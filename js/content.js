@@ -27,7 +27,9 @@ function addButtons(){
         var post = posts[i];
         var istr = i.toString();
         post.id = 'p'+istr;
-		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" onclick="buttonPressed(this)" id="b${istr}"></div>`);
+        var buttonid = "b"+istr;
+		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" onclick="buttonPressed(this)" id="${buttonid}"></div>`);
+        $(`#${buttonid}`)[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
     }
 }
 
@@ -44,7 +46,9 @@ function buttonPressed(button){
     var outerContainer = $("#outer-container");
 	if(outerContainer.length < 1) {
         $("body")[0].insertAdjacentHTML('afterbegin', html.replace("crs", src2));
-        $("#close-button").on("mousedown", closePopup);
+        var closeButton = $("#close-button");
+        closeButton.on("mousedown", closePopup);
+        closeButton[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/closeIconWhite.png") + ")";
         var iframeContainer = $("#iframe-container");
         iframeContainer.resizable({
             aspectRatio: 16 / 9,
@@ -54,6 +58,9 @@ function buttonPressed(button){
             minWidth: 400,
             handles: "se"
         });
+        // console.log(iframeContainer[0].children[1]);
+        // iframeContainer[0].children[1].style.backgroundImage = "url(" + chrome.extension.getURL("images/frameResize.png") + ")!important";
+        // $(iframeContainer[0].children[1]).css("background-image", "url(" + chrome.extension.getURL("images/frameResize.png") + ")!important");
         iframeContainer.hover(handlerIn, function () {
         });
         $("#iframe22").hover(handlerIn, function () {

@@ -35,7 +35,6 @@
 .popup-button{
     width: 20px;
     height: 20px;
-    background-image: url('https://i.imgur.com/66OuwS2.png');
     background-size: 20px;
     background-repeat: no-repeat;
     margin-bottom: -20px;
@@ -45,7 +44,6 @@
 #close-button{
     width: 30px;
     height: 30px;
-    background-image: url('https://i.imgur.com/bxdZWSq.png');
     background-size: 30px;
     background-repeat: no-repeat;
     top: 0;
