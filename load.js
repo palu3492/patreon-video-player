@@ -3,7 +3,7 @@
 var posts = [];
 var html = `
 <div id="outer-container">
-    <div id="close-button" onclick="closePopup()"></div>
+    <div id="close-button"></div>
 	<div id="iframe-container">
 		<iframe id="iframe22" scrolling="no" frameborder="0" src="crs" allowfullscreen></iframe>
 	</div>
@@ -44,6 +44,7 @@ function buttonPressed(button){
     var outerContainer = $("#outer-container");
 	if(outerContainer) {
         $("body")[0].insertAdjacentHTML('afterbegin', html.replace("crs", src2));
+        $("#close-button").on("mousedown", closePopup);
         var iframeContainer = $("#iframe-container");
         iframeContainer.resizable({
             aspectRatio: 16 / 9,
@@ -73,7 +74,7 @@ function handlerIn(){
 }
 
 function closePopup(){
-    var outerContainer = $("#outer-container");
+    var outerContainer = $("#outer-container")[0];
     outerContainer.style.visibility = "hidden";
     outerContainer.style.display = "none";
 }
