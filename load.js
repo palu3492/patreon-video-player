@@ -42,7 +42,7 @@ function buttonPressed(button){
     var src = iframe1.src.split('=')[1].split('&')[0];
     var src2 = convertAllEscapes(src,1);
     var outerContainer = $("#outer-container");
-	if(outerContainer) {
+	if(outerContainer.length < 1) {
         $("body")[0].insertAdjacentHTML('afterbegin', html.replace("crs", src2));
         $("#close-button").on("mousedown", closePopup);
         var iframeContainer = $("#iframe-container");
@@ -59,9 +59,9 @@ function buttonPressed(button){
         $("#iframe22").hover(handlerIn, function () {
         });
     } else {
-        $("#iframe22").src = src2;
-        outerContainer.style.visibility = "initial";
-        outerContainer.style.display = "initial";
+        $("#iframe22")[0].src = src2;
+        outerContainer[0].style.visibility = "initial";
+        outerContainer[0].style.display = "initial";
     }
 }
 
@@ -77,6 +77,7 @@ function closePopup(){
     var outerContainer = $("#outer-container")[0];
     outerContainer.style.visibility = "hidden";
     outerContainer.style.display = "none";
+    $("#iframe22")[0].src="";
 }
 
 findVideoPosts();
