@@ -3,7 +3,7 @@
 var posts = [];
 var html = `
 <div id="outer-container">
-    <div id="close-button" onclick="close()"></div>
+    <div id="close-button" onclick="closePopup()"></div>
 	<div id="iframe-container">
 		<iframe id="iframe22" scrolling="no" frameborder="0" src="crs" allowfullscreen></iframe>
 	</div>
@@ -27,25 +27,25 @@ function addButtons(){
         var post = posts[i];
         var istr = i.toString();
         post.id = 'p'+istr;
-		post.insertAdjacentHTML('afterbegin', `<div class="popout-button" onclick="buttonPressed(this)" id="b${istr}"></div>`);
+		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" onclick="buttonPressed(this)" id="b${istr}"></div>`);
     }
 }
 
 function buttonPressed(button){
 	var id = button.id;
 	var post = $('#p'+id[1]);
-	// if video not loaded yet then click play to load it
-    console.log($(post).find('button'));
-	if(true) {
-        $(post).find('button').click();
+    var playButton = $(post).find('button[title="Start playback"]');
+	if(playButton.length === 1) {
+        playButton.click();
     }
     var iframe1 = $(post).find('iframe')[0];
     var src = iframe1.src.split('=')[1].split('&')[0];
     var src2 = convertAllEscapes(src,1);
-    //if not already exists otherwise just change src
-	if(true) {
+    var outerContainer = $("#outer-container");
+	if(outerContainer) {
         $("body")[0].insertAdjacentHTML('afterbegin', html.replace("crs", src2));
-        $("#iframe-container").resizable({
+        var iframeContainer = $("#iframe-container");
+        iframeContainer.resizable({
             aspectRatio: 16 / 9,
             maxHeight: 1080,
             maxWidth: 1920,
@@ -53,14 +53,14 @@ function buttonPressed(button){
             minWidth: 400,
             handles: "se"
         });
-        $("#iframe-container").hover(handlerIn, function () {
+        iframeContainer.hover(handlerIn, function () {
         });
         $("#iframe22").hover(handlerIn, function () {
         });
     } else {
-        var popout = $("#outer-container");
-        popout.style.visibility = "initial";
-        popout.style.display = "initial";
+        $("#iframe22").src = src2;
+        outerContainer.style.visibility = "initial";
+        outerContainer.style.display = "initial";
     }
 }
 
@@ -72,60 +72,11 @@ function handlerIn(){
 	}
 }
 
-// function findAllBoxes(){
-// 	var boxes = [];
-//
-// 	try {
-// 		var boxes1 = document.querySelector("div#featureDealsAndCoupons.gridCategory").children;
-// 	}catch(err) {
-// 		var boxes1 = document.querySelector("div#featureDealsAndCoupons.gridCategory.giveawayActive").children;
-// 	}
-// 	var boxes2 = document.querySelectorAll("div.gridCategory.removeHidden")[0].children;
-// 	var boxes3 = document.querySelectorAll("div.gridCategory.removeHidden")[2].children;
-// 	boxes.push.apply(boxes,boxes1);
-// 	boxes.push.apply(boxes,boxes2);
-// 	boxes.push.apply(boxes,boxes3);
-// 	return boxes;
-// }
-
-// function findAllNonAmazon(boxes){
-// 	var box = null;
-// 	var anchorTag = null;
-// 	var companyName = "";
-// 	var removedBoxes = [];
-// 	for(i = 0; i < boxes.length; i++) {
-// 		box = boxes[i];
-// 		anchorTag = box.querySelector("a.itemStore");
-// 		if (anchorTag != null){
-// 			companyName = anchorTag.text;
-// 			if (companyName.replace(/\s+/g,"")!="Amazon") {
-// 				removedBoxes.push(boxes[i]);
-// 			}
-// 		}else{
-// 			removedBoxes.push(boxes[i]);
-// 		}
-// 	}
-// 	return removedBoxes;
-// }
-//
-// function changeBoxesVisibility(boxes){
-// 	if(boxes[0].style.visibility == "hidden"){
-// 		for(i = 0; i < boxes.length; i++){
-// 			boxes[i].style.visibility = "initial";
-// 			boxes[i].style.display = "initial";
-// 		}
-// 	}else{
-// 		for(i = 0; i < boxes.length; i++){
-// 			boxes[i].style.visibility = "hidden";
-// 			boxes[i].style.display = "none";
-// 		}
-// 	}
-// }
-//
-// var allBoxes = findAllBoxes();
-// var nonAmazonBoxes = findAllNonAmazon(allBoxes);
-//
-// changeBoxesVisibility(nonAmazonBoxes);
+function closePopup(){
+    var outerContainer = $("#outer-container");
+    outerContainer.style.visibility = "hidden";
+    outerContainer.style.display = "none";
+}
 
 findVideoPosts();
 addButtons();
