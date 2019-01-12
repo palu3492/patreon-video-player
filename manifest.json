@@ -13,7 +13,7 @@
       "matches": [
         "*://*.patreon.com/*"
       ],
-      "js": ["jquery-3.3.1.min.js","load.js", "jquery-ui.js", "conversionfunctions.js"],
+      "js": ["jquery-3.3.1.min.js","load.js", "jquery-ui.js", "conversionFunctions.js", "other.js"],
       "css": ["index.css", "jquery-ui.css"]
     }
   ]

@@ -3,6 +3,7 @@
 var posts = [];
 var html = `
 <div id="outer-container">
+    <div id="close-button" onclick="close()"></div>
 	<div id="iframe-container">
 		<iframe id="iframe22" scrolling="no" frameborder="0" src="crs" allowfullscreen></iframe>
 	</div>
@@ -34,6 +35,7 @@ function buttonPressed(button){
 	var id = button.id;
 	var post = $('#p'+id[1]);
 	// if video not loaded yet then click play to load it
+    console.log($(post).find('button'));
 	if(true) {
         $(post).find('button').click();
     }
@@ -55,15 +57,17 @@ function buttonPressed(button){
         });
         $("#iframe22").hover(handlerIn, function () {
         });
+    } else {
+        var popout = $("#outer-container");
+        popout.style.visibility = "initial";
+        popout.style.display = "initial";
     }
 }
 
 function handlerIn(){
 	if($("#iframe-container")[0].classList.value === 'ui-resizable ui-resizable-resizing'){
 		$("#iframe22").addClass('iframe-resize');
-		console.log('yes');
 	} else {
-        console.log('no');
         $("#iframe22").removeClass('iframe-resize');
 	}
 }
