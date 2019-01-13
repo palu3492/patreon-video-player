@@ -61,10 +61,8 @@ function buttonPressed(button){
         // console.log(iframeContainer[0].children[1]);
         // iframeContainer[0].children[1].style.backgroundImage = "url(" + chrome.extension.getURL("images/frameResize.png") + ")!important";
         // $(iframeContainer[0].children[1]).css("background-image", "url(" + chrome.extension.getURL("images/frameResize.png") + ")!important");
-        iframeContainer.hover(handlerIn, function () {
-        });
-        $("#iframe22").hover(handlerIn, function () {
-        });
+        iframeContainer.hover(handlerIn);
+        $("#iframe22").hover(handlerIn);
     } else {
         $("#iframe22")[0].src = src2;
         outerContainer[0].style.visibility = "initial";
