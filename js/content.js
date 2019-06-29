@@ -1,6 +1,6 @@
 
 
-var posts = [];
+var videoPosts = [];
 var html = `
 <div id="outer-container">
     <div id="close-button"></div>
@@ -10,26 +10,26 @@ var html = `
 </div>`;
 
 function findVideoPosts(){
-    var possiblePosts = document.querySelectorAll('[data-tag]');
-    for (var i in possiblePosts) if (possiblePosts.hasOwnProperty(i)) {
-    	var element = possiblePosts[i];
-    	var dataTag = element.getAttribute('data-tag');
-    	if(dataTag === 'post-card') {
-    		if($(element).find("figure[title='video thumbnail']").length > 0) {
-                posts.push(element);
-            }
+    var posts = $('[data-tag="post-card"]');
+    $(posts).each(function(){
+        if($(this).find("figure[title='video thumbnail']").length > 0) {
+            videoPosts.push(this);
         }
-    }
+    });
 }
 
 function addButtons(){
-    for (var i=0; i<posts.length; i++) {
-        var post = posts[i];
+    for (var i=0; i<videoPosts.length; i++) {
+        var post = videoPosts[i];
         var istr = i.toString();
         post.id = 'p'+istr;
         var buttonid = "b"+istr;
-		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" onclick="buttonPressed(this)" id="${buttonid}"></div>`);
-        $(`#${buttonid}`)[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
+		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
+		var button = $(`#${buttonid}`);
+        button[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
+        button.click(function() {
+            buttonPressed(this);
+        });
     }
 }
 
@@ -85,5 +85,22 @@ function closePopup(){
     $("#iframe22")[0].src="";
 }
 
-findVideoPosts();
-addButtons();
+// findVideoPosts();
+// addButtons();
+var BreakException = {};
+var observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.addedNodes){
+            findVideoPosts();
+            addButtons();
+            observer.disconnect();
+            throw BreakException; // bad way to break loop
+        }
+    })
+});
+observer.observe($('.sc-cvbbAY.eTzZKz')[0], {
+    childList: true
+    , subtree: true
+    , attributes: false
+    , characterData: false
+});
