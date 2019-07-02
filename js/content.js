@@ -10,9 +10,10 @@ var html = `
 </div>`;
 
 function findVideoPosts(){
+    videoPosts = [];
     var posts = $('[data-tag="post-card"]');
     $(posts).each(function(){
-        if($(this).find("figure[title='video thumbnail']").length > 0) {
+        if($(this).find("figure[title='video thumbnail']").length) {
             videoPosts.push(this);
         }
     });
@@ -22,20 +23,24 @@ function addButtons(){
     for (var i=0; i<videoPosts.length; i++) {
         var post = videoPosts[i];
         var istr = i.toString();
-        post.id = 'p'+istr;
-        var buttonid = "b"+istr;
-		post.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
-		var button = $(`#${buttonid}`);
-        button[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
-        button.click(function() {
-            buttonPressed(this);
-        });
+        var postId = 'p'+istr;
+        if(!$('#'+postId).length) {
+            post.id = postId;
+            var buttonid = "b" + istr;
+            post.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
+            var button = $(`#${buttonid}`);
+            button[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
+            button.click(function () {
+                buttonPressed(this);
+            });
+        }
     }
 }
 
 function buttonPressed(button){
 	var id = button.id;
-	var post = $('#p'+id[1]);
+	id = id.replace('b', "");
+	var post = $('#p'+id)[0];
     var playButton = $(post).find('button[title="Start playback"]');
 	if(playButton.length === 1) {
         playButton.click();
@@ -85,22 +90,52 @@ function closePopup(){
     $("#iframe22")[0].src="";
 }
 
-// findVideoPosts();
-// addButtons();
-var BreakException = {};
+function findPostsAddButtons(){
+    findVideoPosts();
+    addButtons();
+}
+// var firstTime = true;
+// var BreakException = {};
 var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
         if (mutation.addedNodes){
-            findVideoPosts();
-            addButtons();
-            observer.disconnect();
-            throw BreakException; // bad way to break loop
+            curNumberOfVideos = $(document).find("figure[title='video thumbnail']").length;
+            if(curNumberOfVideos > prevNumberOfVideos) {
+                prevNumberOfVideos = curNumberOfVideos;
+                findPostsAddButtons();
+                // if (firstTime) {
+                //     setupLoadMore();
+                //     firstTime = false;
+                // }
+                // observer.disconnect();
+                // throw BreakException; // bad way to break loop
+            }
         }
     })
 });
+var prevNumberOfVideos = 0;
+var curNumberOfVideos = 0;
+// var curNumberOfVideos = 0;
 observer.observe($('.sc-cvbbAY.eTzZKz')[0], {
     childList: true
     , subtree: true
     , attributes: false
     , characterData: false
 });
+//
+// function setupLoadMore(){
+//     var buttons = $('button[type="button"]');
+//     $(buttons).each(function(){
+//         if($(this).find("div:contains('Load more')").length > 0) {
+//             $(this).click(function () {
+//                 observer.observe($('.sc-cvbbAY.eTzZKz')[0], {
+//                     childList: true
+//                     , subtree: true
+//                     , attributes: false
+//                     , characterData: false
+//                 });
+//                 throw BreakException;
+//             });
+//         }
+//     });
+// }

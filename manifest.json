@@ -3,7 +3,7 @@
   "manifest_version": 2,
   "name": "Patreon Pop-up Video Player",
   "description": "Allows users to watch videos in a resizable popup window while remaining on Patreon's website.",
-  "version": "1.2",
+  "version": "1.3",
   "content_scripts": [
     {
       "matches": [
