@@ -21,13 +21,17 @@ function findVideoPosts(){
 
 function addButtons(){
     for (var i=0; i<videoPosts.length; i++) {
+        // Assign ids to video posts
         var post = videoPosts[i];
         var istr = i.toString();
         var postId = 'p'+istr;
+        // Only add buttons if video posts don't exist
         if(!$('#'+postId).length) {
-            post.id = postId;
+            post.id = postId; // set post id
+            var thumbnail = $(post).find("figure[title='video thumbnail']");
+            var div = thumbnail.parent().children()[1];
             var buttonid = "b" + istr;
-            post.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
+            div.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
             var button = $(`#${buttonid}`);
             button[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
             button.click(function () {
@@ -90,52 +94,25 @@ function closePopup(){
     $("#iframe22")[0].src="";
 }
 
-function findPostsAddButtons(){
-    findVideoPosts();
-    addButtons();
-}
-// var firstTime = true;
-// var BreakException = {};
 var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
         if (mutation.addedNodes){
             curNumberOfVideos = $(document).find("figure[title='video thumbnail']").length;
             if(curNumberOfVideos > prevNumberOfVideos) {
                 prevNumberOfVideos = curNumberOfVideos;
-                findPostsAddButtons();
-                // if (firstTime) {
-                //     setupLoadMore();
-                //     firstTime = false;
-                // }
-                // observer.disconnect();
-                // throw BreakException; // bad way to break loop
+                findVideoPosts();
+                addButtons();
             }
         }
     })
 });
+
 var prevNumberOfVideos = 0;
 var curNumberOfVideos = 0;
-// var curNumberOfVideos = 0;
-observer.observe($('.sc-cvbbAY.eTzZKz')[0], {
+
+observer.observe($('.s1x8jlcb-5')[0], {
     childList: true
     , subtree: true
     , attributes: false
     , characterData: false
 });
-//
-// function setupLoadMore(){
-//     var buttons = $('button[type="button"]');
-//     $(buttons).each(function(){
-//         if($(this).find("div:contains('Load more')").length > 0) {
-//             $(this).click(function () {
-//                 observer.observe($('.sc-cvbbAY.eTzZKz')[0], {
-//                     childList: true
-//                     , subtree: true
-//                     , attributes: false
-//                     , characterData: false
-//                 });
-//                 throw BreakException;
-//             });
-//         }
-//     });
-// }

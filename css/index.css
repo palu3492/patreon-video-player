@@ -37,9 +37,10 @@
     height: 20px;
     background-size: 20px;
     background-repeat: no-repeat;
-    margin-bottom: -20px;
-    margin-left: -22px;
     cursor: pointer;
+    z-index: 1000;
+    position: absolute;
+    margin-top: -14px;
 }
 #close-button{
     width: 30px;
