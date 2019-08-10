@@ -28,10 +28,9 @@ function addButtons(){
         // Only add buttons if video posts don't exist
         if(!$('#'+postId).length) {
             post.id = postId; // set post id
-            var thumbnail = $(post).find("figure[title='video thumbnail']");
-            var div = thumbnail.parent().children()[1];
+            let parent = $(post).find("figure[title='video thumbnail']").parent().get(0);
             var buttonid = "b" + istr;
-            div.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
+            parent.insertAdjacentHTML('afterbegin', `<div class="popup-button" title="Open video player" id="${buttonid}"></div>`);
             var button = $(`#${buttonid}`);
             button[0].style.backgroundImage = "url(" + chrome.extension.getURL("images/popup.png") + ")";
             button.click(function () {
