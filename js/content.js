@@ -109,7 +109,7 @@ var observer = new MutationObserver(function(mutations) {
 var prevNumberOfVideos = 0;
 var curNumberOfVideos = 0;
 
-observer.observe($('.sc-cSHVUG.AaqDd')[0], {
+observer.observe($('.sc-bxivhb.cLPxuX')[0], {
     childList: true
     , subtree: true
     , attributes: false

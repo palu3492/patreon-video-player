@@ -1,9 +1,3 @@
-.idea/
-.*
-!/.gitignore
-
-# Ignore screenshots
-/screenshots/screenshot1.png
-/screenshots/screenshot2.png
-/screenshots/screenshot3.png
-/screenshots/screenshot4.png
+.idea/*
+/screenshots/*
+*.xml
