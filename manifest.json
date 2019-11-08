@@ -10,7 +10,7 @@
         "*://*.patreon.com/*"
       ],
       "run_at": "document_end",
-      "js": ["js/jquery-3.3.1.min.js","js/content.js", "js/jquery-ui.js", "js/conversionFunctions.js"],
+      "js": ["js/jquery-3.3.1.min.js","js/content.js", "js/jquery-ui.js", "js/conversionFunctions.js", "js/countImpressions.js"],
       "css": ["css/index.css", "css/jquery-ui.css"]
     }
   ],

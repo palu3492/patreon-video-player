@@ -1,7 +1,7 @@
 
 
-var videoPosts = [];
-var html = `
+let videoPosts = [];
+let html = `
 <div id="outer-container">
     <div id="close-button"></div>
 	<div id="iframe-container">
@@ -11,7 +11,7 @@ var html = `
 
 function findVideoPosts(){
     videoPosts = [];
-    var posts = $('[data-tag="post-card"]');
+    let posts = $('[data-tag="post-card"]');
     $(posts).each(function(){
         if($(this).find("figure[title='video thumbnail']").length) {
             videoPosts.push(this);
@@ -41,6 +41,7 @@ function addButtons(){
 }
 
 function buttonPressed(button){
+    countImpression();
 	var id = button.id;
 	id = id.replace('b', "");
 	var post = $('#p'+id)[0];
@@ -87,16 +88,19 @@ function handlerIn(){
 }
 
 function closePopup(){
-    var outerContainer = $("#outer-container")[0];
+    let outerContainer = $("#outer-container")[0];
     outerContainer.style.visibility = "hidden";
     outerContainer.style.display = "none";
     $("#iframe22")[0].src="";
 }
 
-var observer = new MutationObserver(function(mutations) {
+// Observe when there are changes to dom
+// Looking to see if new video posts are loaded
+let observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
         if (mutation.addedNodes){
             curNumberOfVideos = $(document).find("figure[title='video thumbnail']").length;
+            // Check if new elements are new video posts
             if(curNumberOfVideos > prevNumberOfVideos) {
                 prevNumberOfVideos = curNumberOfVideos;
                 findVideoPosts();
@@ -106,10 +110,10 @@ var observer = new MutationObserver(function(mutations) {
     })
 });
 
-var prevNumberOfVideos = 0;
-var curNumberOfVideos = 0;
+let prevNumberOfVideos = 0;
+let curNumberOfVideos = 0;
 
-observer.observe($('.sc-bxivhb.cLPxuX')[0], {
+observer.observe($("div[role='main']")[0], {
     childList: true
     , subtree: true
     , attributes: false
