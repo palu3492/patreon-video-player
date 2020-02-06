@@ -2,8 +2,8 @@
   "author": "Alex Palumbo",
   "manifest_version": 2,
   "name": "Patreon Pop-up Video Player",
-  "description": "Allows users to watch videos in a resizable popup window while remaining on Patreon's website.",
-  "version": "1.8",
+  "description": "Watch videos on Patreon in a resizable pop-up video player.",
+  "version": "1.9.1",
   "content_scripts": [
     {
       "matches": [
